@@ -45,3 +45,9 @@ show current connected WiFi ssid
 
 `iwgetid` -r gives just the name.
 
+記得把`Serial.begin(rate)`改成`9600`
+原本找的範例程式碼是`115200`，在serial monitor回傳的都是亂碼
+改成`9600`後就正常了
+
+連接WiFi成功,可以在同一個網域連到nodeMCU了！
+
