@@ -51,3 +51,9 @@ show current connected WiFi ssid
 
 連接WiFi成功,可以在同一個網域連到nodeMCU了！
 
+3/17 22:50
+
+明天進度：
+- 連上外部網站
+- 完成硬體demo (看ESP8266可不可以接上Arduino 畢竟腳位太少了)
+- flask app for admin user login etc
