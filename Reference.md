@@ -57,3 +57,5 @@ show current connected WiFi ssid
 - 連上外部網站
 - 完成硬體demo (看ESP8266可不可以接上Arduino 畢竟腳位太少了)
 - flask app for admin user login etc
+
+ThingSpeak 雲端平台
