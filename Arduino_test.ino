@@ -25,6 +25,7 @@ void setup(){
   pinMode(GreenPin, OUTPUT);
   Serial.begin(9600);
 
+    Check(true);
 }
 
 void loop(){
