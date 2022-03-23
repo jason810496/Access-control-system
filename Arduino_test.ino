@@ -21,40 +21,40 @@ const int RedPin = 12;                          //紅色 LED 連接 Arduino pin 
 const int GreenPin = 13;                      //綠色 LED 連接 Arduino pin 13
 
 void setup(){
-  pinMode(RedPin, OUTPUT);
-  pinMode(GreenPin, OUTPUT);
-  Serial.begin(9600);
+    pinMode(RedPin, OUTPUT);
+    pinMode(GreenPin, OUTPUT);
+    Serial.begin(9600);
 
     Check(true);
 }
 
 void loop(){
-  char key = keypad.getKey();
+    char key = keypad.getKey();
 
-  Serial.println(key) ;
-  if (key == '*' || key == '#'){
-    idx = 0;
-    Check(true);
-  }
-  if (key == pwd[idx] ){
-    idx ++;
-  }
-  if (idx == pwd_len ){
-    Check(false);
-  }
-  delay(100);
+    Serial.println(key) ;
+
+    if (key == '*' || key == '#'){
+        idx = 0;
+        Check(true);
+    }
+    if (key == pwd[idx] ){
+        idx ++;
+    }
+    if (idx == pwd_len ){
+        Check(false);
+    }
+    delay(100);
 }
 
-void Check(bool is_locked)
-{
-  if ( is_locked ){
-    digitalWrite(RedPin, HIGH);
-    digitalWrite(GreenPin, LOW);
-//  ServoMotor.write(11);
-  }
-  else{       //open the door                                    //輸入密碼和預設密碼相符，綠色 LED 亮，開門
-    digitalWrite(RedPin, LOW);
-    digitalWrite(GreenPin, HIGH);
-//  ServoMotor.write(90);
-  }
+void Check(bool is_locked){
+    if ( is_locked ){
+        digitalWrite(RedPin, HIGH);
+        digitalWrite(GreenPin, LOW);
+        //  ServoMotor.write(11);
+    }
+    else{       //open the door                                    //輸入密碼和預設密碼相符，綠色 LED 亮，開門
+        digitalWrite(RedPin, LOW);
+        digitalWrite(GreenPin, HIGH);
+        //  ServoMotor.write(90);
+    }
 }
