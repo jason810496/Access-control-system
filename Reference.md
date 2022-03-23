@@ -59,3 +59,12 @@ show current connected WiFi ssid
 - flask app for admin user login etc
 
 ThingSpeak 雲端平台
+
+https://www.youtube.com/watch?v=SiU-QZwik8w
+
+nodemcu + arduino ( video)
+
+透徹的了解keypad:
+
+https://diyi0t.com/keypad-arduino-esp8266-esp32/
+
