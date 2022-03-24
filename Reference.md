@@ -68,3 +68,23 @@ nodemcu + arduino ( video)
 
 https://diyi0t.com/keypad-arduino-esp8266-esp32/
 
+
+http://maker.tn.edu.tw/modules/tad_book3/page.php?tbdsn=385
+
+arduino + ESP2688 接線
+
+https://honeststore.com.tw/blog/esp8266_post/esp8266-pinout/
+
+eps2688 pinout ( gpio )
+
+https://randomnerdtutorials.com/projects-esp8266/
+
+esp2688 project
+
+https://hackmd.io/@wh91008/Sy9U8aZbB
+
+google cloud function
+
+https://create.arduino.cc/projecthub/pratikdesai/how-to-program-esp8266-esp-01-module-with-arduino-uno-598166
+
+esp01 with arduino 
