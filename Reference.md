@@ -96,3 +96,22 @@ esp01 with arduino project
 https://www.instructables.com/Getting-Started-With-the-ESP8266-ESP-01/
 
 get start with esp01
+
+
+
+esp01 error message
+```
+
+esptool.py v3.0
+Serial port /dev/ttyUSB0
+Connecting........_____....._____....._____....._____....._____....._____....._____
+Traceback (most recent call last):
+  File "/home/jason/.arduino15/packages/esp8266/hardware/esp8266/3.0.2/tools/upload.py", line 66, in <module>
+    esptool.main(cmdline)
+  File "/home/jason/.arduino15/packages/esp8266/hardware/esp8266/3.0.2/tools/esptool/esptool.py", line 3552, in main
+    esp.connect(args.before, args.connect_attempts)
+  File "/home/jason/.arduino15/packages/esp8266/hardware/esp8266/3.0.2/tools/esptool/esptool.py", line 529, in connect
+    raise FatalError('Failed to connect to %s: %s' % (self.CHIP_NAME, last_error))
+esptool.FatalError: Failed to connect to ESP8266: Timed out waiting for packet header
+esptool.FatalError: Failed to connect to ESP8266: Timed out waiting for packet header
+```
