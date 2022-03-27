@@ -1,3 +1,15 @@
+/*--- ESP8266 wifi & server part---*/
+#include<ESP8266WiFi.h>
+#include<ESP8266WebServer.h>
+#include<DNSServer.h>
+
+#define MAX_CLIENT 2
+WiFiServer server(23);
+
+ESP8266WebServer esp8266_server(80);
+
+WiFiClient serverClients[MAX_CLIENT];
+DNSServer dnsServer;
 
 /*--- keypad setting part  ---*/
 const uint8_t Key1 = D1;
