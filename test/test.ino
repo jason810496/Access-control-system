@@ -21,15 +21,17 @@ uint8_t cur_pwd_idx = 0;
 void setup() {
   // put your setup code here, to run once:
 
+    // Serial 
     Serial.begin(9600);                  
     Serial.print("Hello World\n");  
 
+    // 4X1 keypad pinin
     pinMode(Key1, INPUT_PULLUP);// set pin as input
     pinMode(Key2, INPUT_PULLUP);// set pin as input
     pinMode(Key3, INPUT_PULLUP);// set pin as input
     pinMode(Key4, INPUT_PULLUP);// set pin as input
 
-    
+    // light pinout
     pinMode(D6, OUTPUT);
     pinMode(D7, OUTPUT);
     Door_state(false);
