@@ -29,6 +29,9 @@ void setup() {
     pinMode(Key3, INPUT_PULLUP);// set pin as input
     pinMode(Key4, INPUT_PULLUP);// set pin as input
 
+    
+    pinMode(D6, OUTPUT);
+    pinMode(D7, OUTPUT);
     Door_state(false);
 
 }
@@ -74,6 +77,8 @@ void loop() {
   
     char key = Get_key();
 
+    Serial.println(key);
+
     if( key == '4'){
         cur_pwd_idx = 0;
         Door_state(false);
@@ -86,5 +91,5 @@ void loop() {
         Door_state(true);
     }
 
-    delay(500);
+    delay(300);
 }
