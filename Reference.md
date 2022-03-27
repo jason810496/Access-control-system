@@ -163,3 +163,12 @@ https://github.com/espressif/arduino-esp32/tree/master/libraries/WiFi/examples
 
 
 所以只好再去補買Cp2101(USB轉UART)
+
+
+flask get uset ip address 
+
+https://stackoverflow.com/questions/3759981/get-ip-address-of-visitors-using-flask-for-python
+
+NodeMCU的DNS設定（只有for內網
+
+https://www.twblogs.net/a/5bd3dd3e2b717778ac20f967
