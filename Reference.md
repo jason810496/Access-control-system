@@ -97,6 +97,32 @@ https://www.instructables.com/Getting-Started-With-the-ESP8266-ESP-01/
 
 get start with esp01
 
+GPIO 意思：
+
+General-Purpose Input Output
+
+esp8266 GPIO pinout:
+
+https://randomnerdtutorials.com/esp8266-pinout-reference-gpios/
+
+NodeMCU GPIO setting with arduino IDE
+https://www.electronicwings.com/nodemcu/nodemcu-gpio-with-arduino-ide
+
+
+4X1 keypad :
+
+但是有5個pin，數字朝最右邊的是GND
+
+https://forum.arduino.cc/t/how-to-add-debounce-to-a-4x1-keypad-input-function/621001/4
+
+4X1 keypad example code
+
+--------- GPIO ----------
+
+1 2 3 4 
+
+3 2 4 5 GND 
+
 
 
 esp01 error message
@@ -115,3 +141,25 @@ Traceback (most recent call last):
 esptool.FatalError: Failed to connect to ESP8266: Timed out waiting for packet header
 esptool.FatalError: Failed to connect to ESP8266: Timed out waiting for packet header
 ```
+
+同時Webserver + TCPserver example : 
+
+https://blog.csdn.net/baidu_40311265/article/details/120139534?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_paycolumn_v3&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_paycolumn_v3&utm_relevant_index=1
+
+
+eps8266 wifi server相關 example code on Github
+
+https://github.com/espressif/arduino-esp32/tree/master/libraries/WiFi/examples
+
+
+
+接著去電子材料行補買ESP01後遇到的問題：
+
+我按照這個教學操作：
+
+[透過Arduino燒入ESP01](https://create.arduino.cc/projecthub/pratikdesai/how-to-program-esp8266-esp-01-module-with-arduino-uno-598166)
+
+但是都無法連接到ESP01
+
+
+所以只好再去補買Cp2101(USB轉UART)
