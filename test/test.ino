@@ -4,6 +4,8 @@
 #include<DNSServer.h>
 
 #define MAX_CLIENT 2
+#define DNS_PORT 53
+
 WiFiServer server(23);
 
 ESP8266WebServer esp8266_server(80);
@@ -48,6 +50,45 @@ void setup() {
     pinMode(D7, OUTPUT);
     Door_state(false);
 
+    // initialize esp8266 
+
+    ESP8266__init__() ;
+    WebServer__init__();
+    TCPServer__init__();
+
+}
+
+void ESP8266__init__(){
+    IPAddress softLocal(192,168,1,1);
+    IPAddress softGateway(192,168,1,1);
+    IPAddress softSubnet(255,255,255,0);    
+    WiFi.softAPConfig(softLocal , softGateway , softSubnet );
+
+    const char APname[] = "NodeMCU";
+
+    WIFi.softAP(softAPName , "password");
+
+    dnsServer.start(DNS_PORT , "www.iot.dev" , softLocal );
+
+    IPAddress myIP = WiFi.softAPIP();
+
+    Serial.print("IP address : ");
+    Serial.println(myIP);
+
+    Serial.print("SSID : ");
+    Serial.println(APname);
+}
+
+
+void WebServer__init__(){
+    esp8266_server.begin();
+    esp8266_server.on("/",HandleRoot);
+    esp8266_server.on("/data",HandleData);
+}
+
+void TCPServer__init__(){
+    server.begin();
+    server.SetNodelay(true);
 }
 
 char Get_key(){
