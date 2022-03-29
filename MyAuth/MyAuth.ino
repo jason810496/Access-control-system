@@ -42,6 +42,8 @@ void HandleRoot(){
 
 void HandleLogin(){
 
+    Serial.println( " to login page");
+
     if (server.hasHeader("Cookie")){
         Serial.print("Found cookie: ");
         String cookie = server.header("Cookie");
@@ -58,6 +60,8 @@ void HandleLogin(){
             return ;
         }
     }
+
+    Serial.println(" Login Check point ");
     // check password
     if (server.hasArg("USERNAME") && server.hasArg("PASSWORD")){
         if (server.arg("USERNAME") == USERNAME &&  server.arg("PASSWORD") == PASSWORD ){
@@ -70,7 +74,14 @@ void HandleLogin(){
         }
     }
 
-    server.send(200, "text/html", String(LOGIN_HTML));
+
+    String content = "<html><body><form action='/login' method='POST'>To log in, please use : admin/admin<br>";
+    content += "User:<input type='text' name='USERNAME' placeholder='user name'><br>";
+    content += "Password:<input type='password' name='PASSWORD' placeholder='password'><br>";
+    content += "<input type='submit' name='SUBMIT' value='Submit'></form>" + "message" + "<br>";
+    content += "You also can go <a href='/inline'>here</a></body></html>";
+
+    server.send(200, "text/html", content);
 }
 
 void HandleAdmin(){
@@ -99,22 +110,6 @@ void HandleNotFound(){
     server.send(404, "text/html", String(ERROR_HTML));
 }
 /*---- Handle function end ----*/
-
-//no need authentification
-void handleNotFound(){
-  String message = "File Not Found\n\n";
-  message += "URI: ";
-  message += server.uri();
-  message += "\nMethod: ";
-  message += (server.method() == HTTP_GET)?"GET":"POST";
-  message += "\nArguments: ";
-  message += server.args();
-  message += "\n";
-  for (uint8_t i=0; i<server.args(); i++){
-    message += " " + server.argName(i) + ": " + server.arg(i) + "\n";
-  }
-  server.send(404, "text/plain", message);
-}
 
 void setup(){
     // init Serial 
