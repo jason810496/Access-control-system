@@ -8,11 +8,17 @@
 #include "admin.h"
 //#include "404.h"
 
+// Wifi setting 
 const char SSID[] = "Taylor";
 const char WIFIpassword[] = "Hh033229232";
 
+// Admin user setting 
 const char USERNAME[] = "admin";
 const char PASSWORD[] = "admin";
+
+// Door password
+String DoorPassword= "123123";
+uint8_t DoorPasswordLen = 6;
 
 ESP8266WebServer server(8080);
 
@@ -89,6 +95,15 @@ void HandleAdmin(){
         server.sendHeader("Cache-Control","no-cache");
         server.send(301);
         return;
+    }
+
+    // update Door password
+    if( server.hasArd("PASSWORD") ){
+        DoorPassword = server.arg("PASSWORD");
+        DoorPasswordLen = DoorPassword.length();
+        Serial.print("New password : ");
+        Serial.print(DoorPassword);
+        Serial.println("update door password");
     }
 
     server.send(200,"text/html",ADMIN_HTML);
