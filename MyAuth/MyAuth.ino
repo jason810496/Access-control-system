@@ -20,9 +20,9 @@ ESP8266WebServer server(80);
 bool is_authentified(){
 
   if (server.hasHeader("Cookie")){
-    // Serial.print("Found cookie: ");
+    Serial.print("Found cookie: ");
     String cookie = server.header("Cookie");
-    // Serial.println(cookie);
+    Serial.println(cookie);
 
     // if cookie == "ESPSESSIONID=1"
     if (cookie.indexOf("ESPSESSIONID=1") != -1) {
@@ -51,10 +51,10 @@ void HandleLogin(){
         if (cookie.indexOf("ESPSESSIONID=1") != -1) {
             Serial.println("is authed & go to login page");
 
-            server.sendHeader("Location","/");
+            server.sendHeader("Location","/admin");
             server.send(301);
 
-            Serial.println("redirect to main page");
+            Serial.println("redirect to admin page");
             return ;
         }
     }
@@ -69,6 +69,8 @@ void HandleLogin(){
         return;
         }
     }
+
+    server.send(200, "text/html", String(LOGIN_HTML));
 }
 
 void HandleAdmin(){
@@ -136,7 +138,7 @@ void setup(){
     server.on("/logout", HandleLogout);
     server.on("/admin", HandleAdmin);
     // handle 404
-    serveronNotFound(HandleNotFound);
+    server.onNotFound(HandleNotFound);
 
     //list of headers to be recorded
     const char * headerkeys[] = {"User-Agent","Cookie"} ;
