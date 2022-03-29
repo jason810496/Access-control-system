@@ -237,6 +237,17 @@ https://oilcut123.pixnet.net/blog/post/269282582
 所以將Port forwording的對接口改成`192.168.3.50`（透過Reversed ip 設定保留給NodeMCU的ip）就可以解決以上的情況了！
 
 
+### 新問題
+
+當我寫好大致的server時是開在`80 port`
+
+結果在routing 時(連到`12.34.56.78/login`or`.../user`)卻一直被redirect到`root`（`12.34.56.78/`）去
+
+原本以為是content-type的問題，因為有另一份code的return content-type剛好是`text/plain`就可以routing(我也還不確定卻切的原因)
+
+我以為是
+
+
 
 
 
