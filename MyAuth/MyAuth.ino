@@ -148,5 +148,6 @@ void setup(){
 }
 
 void loop(void){
-  server.handleClient();delay(500);
+  server.handleClient();
+  delay(500);
 }
