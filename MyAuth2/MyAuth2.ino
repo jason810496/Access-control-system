@@ -98,7 +98,7 @@ void HandleAdmin(){
     }
 
     // update Door password
-    if( server.hasArd("PASSWORD") ){
+    if( server.hasArg("PASSWORD") ){
         DoorPassword = server.arg("PASSWORD");
         DoorPasswordLen = DoorPassword.length();
         Serial.print("New password : ");
