@@ -1,5 +1,5 @@
 #include <ESP8266WiFi.h>
-#include <WiFiClient.h>
+//#include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 
 /* --- HTML FILE --- */
@@ -148,5 +148,5 @@ void setup(){
 }
 
 void loop(void){
-  server.handleClient();
+  server.handleClient();delay(500);
 }
