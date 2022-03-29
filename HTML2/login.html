@@ -139,9 +139,11 @@
    
     <div class="container">
         <div class="input-group">
-            <input name="USERNAME" placeholder="Username" type="text" class="inp1">
-            <input name="PASSWORD" placeholder="Password" type="text" class="inp2">
-            <button type="submit">Submit</button>
+            <form action='/login' method='POST'>
+                <input name="USERNAME" placeholder="Username" type="text" class="inp1">
+                <input name="PASSWORD" placeholder="Password" type="text" class="inp2">
+                <button type="submit" name='SUBMIT' value='Submit'>Submit</button>
+            </form>
         </div>
         
     </div>
