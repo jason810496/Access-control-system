@@ -28,17 +28,11 @@ bool is_authentified(){
 }
 
 //login page, also called for disconnect
+
 void handleLogin(){
   String msg;
 
-  if (server.hasArg("DISCONNECT")){
-    Serial.println("Disconnection");
-    server.sendHeader("Location","/login");
-    server.sendHeader("Cache-Control","no-cache");
-    server.sendHeader("Set-Cookie","ESPSESSIONID=0");
-    server.send(301);
-    return;
-  }
+  
 
   if (server.hasHeader("Cookie")){
     Serial.print("Found cookie: ");
@@ -97,6 +91,29 @@ void handleRoot(){
   server.send(200, "text/html", content);
 }
 
+void HandleAdmin(){
+
+}
+
+void HandleRoot(){
+
+}
+
+void HandleLogin(){
+
+}
+
+void HandleLogout(){
+    // if (server.hasArg("DISCONNECT")){
+    Serial.println("Disconnection");
+    server.sendHeader("Location","/login");
+    server.sendHeader("Cache-Control","no-cache");
+    server.sendHeader("Set-Cookie","ESPSESSIONID=0");
+    server.send(301);
+    return;
+//   }
+}
+
 //no need authentification
 void handleNotFound(){
   String message = "File Not Found\n\n";
@@ -142,6 +159,8 @@ void setup(void){
   size_t headerkeyssize = sizeof(headerkeys)/sizeof(char*);
   //ask server to track these headers
   server.collectHeaders(headerkeys, headerkeyssize );
+
+
   server.begin();
   Serial.println("HTTP server started");
 }
