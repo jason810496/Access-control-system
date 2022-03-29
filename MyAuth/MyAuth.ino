@@ -78,10 +78,11 @@ void HandleLogin(){
     String content = "<html><body><form action='/login' method='POST'>To log in, please use : admin/admin<br>";
     content += "User:<input type='text' name='USERNAME' placeholder='user name'><br>";
     content += "Password:<input type='password' name='PASSWORD' placeholder='password'><br>";
-    content += "<input type='submit' name='SUBMIT' value='Submit'></form>" + "message" + "<br>";
+    content += "<input type='submit' name='SUBMIT' value='Submit'></form><br>";
     content += "You also can go <a href='/inline'>here</a></body></html>";
 
-    server.send(200, "text/html", content);
+    // server.send(200, "text/html", content);
+    server.send(200,"text/html", String(LOGIN_HTML));
 }
 
 void HandleAdmin(){
@@ -104,6 +105,8 @@ void HandleLogout(){
     server.sendHeader("Set-Cookie","ESPSESSIONID=0");
     server.send(301);
     return;
+
+    server.send(404, "text/plain", "Logout...");
 }
 
 void HandleNotFound(){
