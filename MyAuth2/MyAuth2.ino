@@ -14,7 +14,7 @@ const char WIFIpassword[] = "Hh033229232";
 const char USERNAME[] = "admin";
 const char PASSWORD[] = "admin";
 
-ESP8266WebServer server(80);
+ESP8266WebServer server(8080);
 
 //Check if header is present and correct
 bool is_authentified(){
@@ -64,6 +64,10 @@ void HandleLogin(){
     Serial.println(" Login Check point ");
     // check password
     if (server.hasArg("USERNAME") && server.hasArg("PASSWORD")){
+
+        // debug 
+        Serial.println( server.arg("USERNAME"));
+        Serial.println( server.arg("PASSWORD"));
         if (server.arg("USERNAME") == USERNAME &&  server.arg("PASSWORD") == PASSWORD ){
         server.sendHeader("Location","/admin");
         server.sendHeader("Cache-Control","no-cache");
@@ -74,14 +78,6 @@ void HandleLogin(){
         }
     }
 
-
-    String content = "<html><body><form action='/login' method='POST'>To log in, please use : admin/admin<br>";
-    content += "User:<input type='text' name='USERNAME' placeholder='user name'><br>";
-    content += "Password:<input type='password' name='PASSWORD' placeholder='password'><br>";
-    content += "<input type='submit' name='SUBMIT' value='Submit'></form><br>";
-    content += "You also can go <a href='/inline'>here</a></body></html>";
-
-    // server.send(200, "text/html", content);
     server.send(200,"text/html", String(LOGIN_HTML));
 }
 
@@ -106,7 +102,7 @@ void HandleLogout(){
     server.send(301);
     return;
 
-    server.send(404, "text/plain", "Logout...");
+    server.send(301, "text/plain", "Logout...");
 }
 
 void HandleNotFound(){
