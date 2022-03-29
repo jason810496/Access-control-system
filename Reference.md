@@ -172,3 +172,72 @@ https://stackoverflow.com/questions/3759981/get-ip-address-of-visitors-using-fla
 NodeMCU的DNS設定（只有for內網
 
 https://www.twblogs.net/a/5bd3dd3e2b717778ac20f967
+
+### Get MAC address
+
+https://techtutorialsx.com/2017/04/09/esp8266-get-mac-address/
+
+### Reversed ip 
+
+Reserved IP設定
+
+(TP link)[https://www.tp-link.com/tw/support/faq/182/]
+
+如何在 TP-Link 無線路由器上設定位址保留
+
+當您為 LAN 中的電腦指定一個保留的 IP 位址，該電腦每次連線到 DHCP 伺服器時，它會接收到同一個 IP 位址。如果 LAN 中的某些電腦需要永久的 IP 位址，請在路由器設定位址保留以達到此目的。
+
+### 常見的port
+
+https://yun1450.pixnet.net/blog/post/47494172
+
+### Port forwarding (ASUS)
+
+https://www.asus.com/tw/support/FAQ/114093/
+
+### WAN , LAN 衝突
+
+解決辦法
+
+https://oilcut123.pixnet.net/blog/post/269282582
+
+
+設定好reversed ip(將一個ip保留特定裝置)
+
+可以解決果以下情況：
+
+裝置在連線至AP(Access point，如路由器)時，AP會分配一組ip給該裝置，如A裝置為`192.168.3.10`、B裝置為`192.168.3.11`、C裝置為`192.168.3.12`，並且每個裝置每次被分配到的ip都不一定一樣
+
+如下次連到網路時：剛好只有C裝置使用網路，就可能被分配到`192.168.3.10`的ip
+
+假設現在NodeMCU被分配到的ip是`192.168.3.12`我port porwording將`192.168.3.12`對接WAN卻沒有使用reversed ip時
+
+我不能保證下次ip位置是`192.168.3.12`的裝置一定是NodeMCU(也有可能在`192.168.3.12`的裝置是我的筆電、我的手機等)而外網可以連線到在`192.168.3.12`的裝置
+
+假設下次的連線：NodeMCU的ip是`192.168.3.10`，而我的手機的ip`192.168.3.12`，port forwording一樣對接`192.168.3.12`在這種情況下：外網由WAN連線時是對接到我的手機而不是NodeMCU!這不但沒有達成外網連NodeMCU，還讓我的手機置於風險之中！
+
+而Reversed ip 的功用是：
+
+**將一個Private LAN ip保留給指定裝置**
+
+那要如何**指定裝置**?
+
+是透過MAC Address（裝置上的網卡）來指定
+
+如：我NodeMCU的MAC address是`E0:98:06:85:E5:BD`
+
+而其他裝置的MAC address會不同：可能是`A1:54:29:D5:38:81`等
+
+透過Reversed ip 設定：
+
+我們可以將`192.168.3.50`的ip都保留下來給MAC Adderss是`E0:98:06:85:E5:BD`的裝置（我的NodeMCU)
+
+那這樣每次MAC Address是`E0:98:06:85:E5:BD`的裝置連線到AP時被分配到的ip都是`192.168.3.50`
+
+所以將Port forwording的對接口改成`192.168.3.50`（透過Reversed ip 設定保留給NodeMCU的ip）就可以解決以上的情況了！
+
+
+
+
+
+
