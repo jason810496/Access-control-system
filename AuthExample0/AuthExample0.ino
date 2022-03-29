@@ -94,7 +94,7 @@ void handleNotFound(){
 }
 
 void setup(void){
-  Serial.begin(115200);
+  Serial.begin(9600);
   WiFi.begin(ssid, password);
   Serial.println("");
 
