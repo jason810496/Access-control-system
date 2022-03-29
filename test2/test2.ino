@@ -1,5 +1,6 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
+#include "index.h"
  
 ESP8266WebServer server(80);
  
@@ -25,6 +26,8 @@ void setup() {
      Serial.print("MAC: ");
      Serial.println(WiFi.macAddress());
  
+    server.on("/",HandleRoot);
+    
     server.on("/body", handleBody); //Associate the handler function to the path
  
     server.begin(); //Start the server
@@ -56,4 +59,11 @@ void handleBody() { //Handler for the body path
  
       server.send(200, "text/plain", message);
       Serial.println(message);
+}
+
+void HandleRoot(){
+
+    Serial.println("client in");
+
+    server.send(200, "text/html", String(INDEX_HTML) );
 }
