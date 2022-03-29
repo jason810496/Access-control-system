@@ -173,10 +173,12 @@ const char ADMIN_HTML[] = R"=====(
 
    
     <div class="container">
-        <div class="input-group">
-            <input name="PASSWORD" placeholder="New Password" type="text" >
-            <button type="submit">Submit</button>
-        </div>
+        <form action='/login' method='POST'>
+            <div class="input-group">
+                <input name="PASSWORD" placeholder="New Password" type="text" >
+                <button type="submit">Submit</button>
+            </div>
+        </form>
         
         <div class="check" onclick="location.href='https://docs.google.com/spreadsheets/d/1vf03VfJjLX2kWeSaBMaxwKXRQkesvMzoU5BSoIg3vXA/edit#gid=0' ">
             <svg xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" fill="currentColor" viewBox="0 0 16 16">
