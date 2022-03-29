@@ -1,3 +1,5 @@
+const char LOGIN_HTML[] = R"=====(
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -42,14 +44,14 @@
             background-color: rgb(133, 91, 91);
             width: 100%;
             left: auto;
-            height: 220px;
+            height: 300px;
 
             min-width: 500px;
         }
         button{
             position:absolute;
             left:75%;
-            top:30%;
+            top:60%;
             width: 10%;
             min-width: 140px;
             height: 70px;
@@ -66,7 +68,6 @@
         input{
             position: absolute;
             left: 10%;
-            top: 30%;
             height: 65px;
             width: 50%;
             border: 5px solid rgb(52, 64, 75);
@@ -88,33 +89,13 @@
             font-size: 25px;
         }
 
-        .check{
-            position:absolute;
-            left:42.5%;
+        .inp1{
+            top:20%;
+        }
+
+        .inp2{
             top:60%;
-            width: 15%;
-            min-width: 200px;
-            height: 70px;
-            border-radius: 10px;
-            font-size: 30px;
-            font-weight: 900;
-            font-family:'Courier New', Courier, monospace ;
-            padding-top: 10px;
-            border: 5px solid rgb(52, 64, 75);
-            color: aliceblue;
-            background-color: rgb(52, 64, 75);
         }
-
-        svg{
-            position: absolute;
-            left:5%;
-        }
-        .Record{
-            position: absolute;
-            left:40%;
-            top:20px;
-        }
-
 
         
 
@@ -125,7 +106,7 @@
             }
         }
 
-        @media screen and (max-width: 500px) {
+        @media screen and (max-width: 600px) {
             
             button{
                 height: 55px;
@@ -143,48 +124,31 @@
             input::placeholder{
                 font-size: 15px;
             }
-
-            svg{
-                width: 30px;
-                height: 30px;
-            }
-
-            .check{
-                min-width: 170px;
-                height:50px;
-                font-size: 20px;
-                left: 25%;
-            }
         }
 
         
     </style>
-    <title>Admin Page</title>
+    <title>Login Page</title>
   </head>
   <body>
     
 
     <!-- header -->
     <div class="bg-dark header">
-        <h2 class="test" >Admin</h2>
+        <h2 class="test" >Login</h2>
     </div>
 
    
     <div class="container">
         <div class="input-group">
-            <input name="PASSWORD" placeholder="New Password" type="text" >
+            <input name="USERNAME" placeholder="Username" type="text" class="inp1">
+            <input name="PASSWORD" placeholder="Password" type="text" class="inp2">
             <button type="submit">Submit</button>
         </div>
         
-        <div class="check" onclick="location.href='https://www.youtube.com/' ">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
-                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
-            </svg>
-            <a class="Record">Record</a>
-        </div>
     </div>
 
    
   </body>
 </html>
+)=====";

@@ -1,3 +1,5 @@
+const char ADMIN_HTML[] = R"=====(
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -188,3 +190,5 @@
    
   </body>
 </html>
+
+)=====";
