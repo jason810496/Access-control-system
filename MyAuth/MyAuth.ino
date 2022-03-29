@@ -2,22 +2,23 @@
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 
-const char* ssid = "Taylor";
-const char* password = "Hh033229232";
+const char SSID[] = "Taylor";
+const char WIFIpassword[] = "Hh033229232";
+
+const char USERNAME[] = "admin";
+const char PASSWORD[] = "NodeMCU==++";
 
 ESP8266WebServer server(80);
 
 //Check if header is present and correct
 bool is_authentified(){
-  Serial.println("Enter is_authentified function");
-
 
   if (server.hasHeader("Cookie")){
-    Serial.print("Found cookie: ");
+    // Serial.print("Found cookie: ");
     String cookie = server.header("Cookie");
-    Serial.println(cookie);
+    // Serial.println(cookie);
 
-    // cookie == "ESPSESSIONID=1"
+    // if cookie == "ESPSESSIONID=1"
     if (cookie.indexOf("ESPSESSIONID=1") != -1) {
       Serial.println("Authentification Successful");
       return true;
@@ -52,7 +53,6 @@ void handleLogin(){
   }
 
 
-  
   if (server.hasArg("USERNAME") && server.hasArg("PASSWORD")){
     if (server.arg("USERNAME") == "admin" &&  server.arg("PASSWORD") == "admin" ){
       server.sendHeader("Location","/");
@@ -91,8 +91,18 @@ void handleRoot(){
   server.send(200, "text/html", content);
 }
 
+/*---- Handle function ----*/
 void HandleAdmin(){
+    Serial.println("Handle Admin");
+    // check permission
+    if( !is_authentified() ){
+        server.sendHeader("Location","/login");
+        server.sendHeader("Cache-Control","no-cache");
+        server.send(301);
+        return;
+    }
 
+    server.send(200,"text/html",ADMIN_HTML);
 }
 
 void HandleRoot(){
@@ -101,18 +111,32 @@ void HandleRoot(){
 
 void HandleLogin(){
 
+    // check password
+    if (server.hasArg("USERNAME") && server.hasArg("PASSWORD")){
+        if (server.arg("USERNAME") == USERNAME &&  server.arg("PASSWORD") == PASSWORD ){
+        server.sendHeader("Location","/");
+        server.sendHeader("Cache-Control","no-cache");
+        server.sendHeader("Set-Cookie","ESPSESSIONID=1");
+        server.send(301);
+        Serial.println("Log in Successful");
+        return;
+        }
+    }
 }
 
 void HandleLogout(){
-    // if (server.hasArg("DISCONNECT")){
     Serial.println("Disconnection");
     server.sendHeader("Location","/login");
     server.sendHeader("Cache-Control","no-cache");
     server.sendHeader("Set-Cookie","ESPSESSIONID=0");
     server.send(301);
     return;
-//   }
 }
+
+void HandleNotFound(){
+
+}
+/*---- Handle function end ----*/
 
 //no need authentification
 void handleNotFound(){
@@ -163,6 +187,40 @@ void setup(void){
 
   server.begin();
   Serial.println("HTTP server started");
+}
+
+
+void setup2(){
+    // init Serial 
+    Serial.begin(9600);
+    // start connect to AP
+    WiFi.begin( SSID , WIFIpassword );
+
+    // Wait for connection 
+
+    while( WiFi.status() != WL_CONNECTED ){
+        delay(500);
+        Serial.print(".");
+    }
+    // after connection 
+    Serial.println("Connected to WiFi !");
+    Serial.print("IP address: ");
+    Serial.println(WiFi.localIP());
+    // routing
+    server.on("/" , HandleRoot);
+    server.on("/login", HandleLogin);
+    server.on("/logout", HandleLogout);
+    server.on("/admin", HandleAdmin);
+    // handle 404
+    serveronNotFound(HandleNotFound);
+
+    //list of headers to be recorded
+    const char * headerkeys[] = {"User-Agent","Cookie"} ;
+    size_t headerkeyssize = sizeof(headerkeys)/sizeof(char*);
+    //ask server to track these headers
+    server.collectHeaders(headerkeys, headerkeyssize );
+    server.begin();
+    Serial.println("HTTP server started");
 }
 
 void loop(void){
