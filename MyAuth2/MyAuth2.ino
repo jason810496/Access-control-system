@@ -1,7 +1,7 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h> 
-#include <ESP8266HTTPClient.h> // for http request to Google API
+#include <WiFiClientSecure.h> // for http request to Google API
 /* --- HTML FILE --- */
 #include "index.h"
 #include "login.h"
@@ -35,10 +35,16 @@ uint8_t idx = 0 ;
 bool Open = false ; 
 
 // google app script API
-String AppURL = "https://script.google.com/macros/s/AKfycbyxtctWmkk0tgnCqc30kakWwgKVrshhzud1ivoZd80_vvK9XSHyFCT6AbScogiOfLHAOA/exec";
+String AppURL = "https://script.google.com/macros/s/AKfycbx_1yRCeWUr80HP90gD5D0OU_0_j_jZxDxzBcgL9q0p7PnGalgH1tMtyuTULiK9o1nKLg/exec";
+String URL = "/macros/s/AKfycbx_1yRCeWUr80HP90gD5D0OU_0_j_jZxDxzBcgL9q0p7PnGalgH1tMtyuTULiK9o1nKLg/exec?sheetUrl=https://docs.google.com/spreadsheets/d/1Po2Ll1h-KpENLhq1eH1kr00YN-hbdD54NjI8gxoVnw8/edit#gid=0&sheetTag=Test";
 
+String AppURL2 = "https://script.google.com/macros/s/AKfycbx_1yRCeWUr80HP90gD5D0OU_0_j_jZxDxzBcgL9q0p7PnGalgH1tMtyuTULiK9o1nKLg/exec?sheetUrl=https://docs.google.com/spreadsheets/d/1Po2Ll1h-KpENLhq1eH1kr00YN-hbdD54NjI8gxoVnw8/edit%23gid=1275261346&sheetTag=Test";
+String URL2 = "/macros/s/AKfycbx_1yRCeWUr80HP90gD5D0OU_0_j_jZxDxzBcgL9q0p7PnGalgH1tMtyuTULiK9o1nKLg/exec?sheetUrl=https://docs.google.com/spreadsheets/d/1Po2Ll1h-KpENLhq1eH1kr00YN-hbdD54NjI8gxoVnw8/edit%23gid=1275261346&sheetTag=Test";
+const char Host[] = "script.google.com";
 // fingerprint:
 // 9A:71:DE:E7:1A:B2:25:CA:B4:F2:36:49:AB:CE:F6:25:62:04:E4:3C
+const char fingerprint[] = "9A:71:DE:E7:1A:B2:25:CA:B4:F2:36:49:AB:CE:F6:25:62:04:E4:3C";
+
 // open 8080 port 
 ESP8266WebServer server(8080);
 
@@ -192,25 +198,30 @@ void UpdateRecord(){
       return ;
     }
     Serial.println("update Record");
-    WiFiClient client;
-    HTTPClient http;
-    http.begin(client,AppURL.c_str() );
-    // send request
-    int httpResponseCode = http.GET();
+    WiFiClientSecure broswer;
+    // set fingerprint
+    broswer.setFingerprint(fingerprint);
+    // https request
+    if( broswer.connect(Host , 443)){
+        broswer.print(String("GET ") + URL2 + " HTTP/1.1\r\n" +
+                  "Host: " + Host + "\r\n" +
+                  "User-Agent: NodeMCU\r\n" +
+                  "Connection: close\r\n\r\n");
 
-    if ( httpResponseCode>0 ) {
-        Serial.println("Update Record successfully");
-        Serial.print("HTTP Response code: ");
-        Serial.println(httpResponseCode);
-        String payload = http.getString();
-        Serial.println(payload);
+        
+        Serial.println("Send Request");
+
+        //  received data
+        while (broswer.connected()){
+            while (broswer.available()){
+                String str = broswer.readStringUntil('\r\n'); // 每次讀取到換行時輸出資料
+                Serial.println(str);
+            }
+        }
     }
-    else {
-        Serial.print("Error code: ");
-        Serial.println(httpResponseCode);
+    else{
+        Serial.println("Connection failed");
     }
-    // Free resources
-    http.end();
 }
 
 void setup(){
