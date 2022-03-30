@@ -1,5 +1,4 @@
 const char LOGIN_HTML[] = R"=====(
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -36,12 +35,12 @@ const char LOGIN_HTML[] = R"=====(
             top:20%;
             width: 100%;
             height: 50%;
-            background-color: rgb(67, 170, 122);
+            background-color: inherit;
         }
         .input-group{
             position: absolute;
             top:10%;
-            background-color: rgb(133, 91, 91);
+            background-color: rgb(139, 139, 151);
             width: 100%;
             left: auto;
             height: 300px;
@@ -72,19 +71,19 @@ const char LOGIN_HTML[] = R"=====(
             width: 50%;
             border: 5px solid rgb(52, 64, 75);
             border-radius: 10px;
-            background-color: rgb(139, 139, 151);
+            background-color: rgb(255, 255, 255);
 
             /* text */
             letter-spacing:1px;
             font-family:'Courier New', Courier, monospace ;
-            color: rgb(255, 255, 255);
+            color: rgb(139, 139, 151);
             padding-left: 20px;
             font-size: 25px;
         }
         input::placeholder{
             letter-spacing:1px;
             font-family:'Courier New', Courier, monospace ;
-            color: rgb(255, 255, 255);
+            color: rgb(139, 139, 151);
             padding-left: 20px;
             font-size: 25px;
         }
@@ -153,4 +152,5 @@ const char LOGIN_HTML[] = R"=====(
    
   </body>
 </html>
+
 )=====";
