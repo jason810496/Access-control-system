@@ -8,6 +8,18 @@
 #include "admin.h"
 //#include "404.h"
 
+// 4x1 keypad
+const uint8_t Key1 = D1;
+const uint8_t Key2 = D2;
+const uint8_t Key3 = D3;
+const uint8_t Key4 = D4;
+
+const int buttonPin[4] = {Key1 , Key2 ,Key3 ,Key4 };
+
+// light 
+const uint8_t GreenPin = D7;
+const uint8_t RedPin = D6;
+
 // Wifi setting 
 const char SSID[] = "Taylor";
 const char WIFIpassword[] = "Hh033229232";
@@ -17,10 +29,50 @@ const char USERNAME[] = "admin";
 const char PASSWORD[] = "admin";
 
 // Door password
-String DoorPassword= "123123";
-uint8_t DoorPasswordLen = 6;
+String DoorPassword= "123";
+uint8_t DoorPasswordLen = 3;
+uint8_t idx = 0 ;
+bool Open = false ; 
 
+// open 8080 port 
 ESP8266WebServer server(8080);
+
+// get current press key 
+char GetKey(){
+    for(uint8_t i=0 ; i<4 ; i++){
+    byte btn_state = digitalRead( buttonPin[i] ) ;
+
+    if( btn_state == LOW ){
+        switch(buttonPin[i){
+            case Key1: 
+                return '1';
+            case Key2:
+                return '2';
+            case Key3:
+                return '3';
+            case Key4:
+                return '4'; 
+        }
+    }
+  }
+  return '0';
+}
+
+// check door state
+void Check(bool flag){
+    if(flag){ // green light
+        digitalWrite(RedPin, LOW);
+        digitalWrite(GreenPin, HIGH);
+    }
+    digitalWrite(RedPin, HIGH);
+    digitalWrite(GreenPin, LOW);
+}
+// reset door
+void ResetDoor(){
+    idx=0;
+    Open = false;
+    Check(false);
+}
 
 //Check if header is present and correct
 bool is_authentified(){
@@ -126,7 +178,25 @@ void HandleNotFound(){
 }
 /*---- Handle function end ----*/
 
+
+void UpdateRecord(){
+
+}
+
 void setup(){
+    /*---- hardware setup ----*/
+    // keypad 
+    pinMode(Key1, INPUT_PULLUP);
+    pinMode(Key2, INPUT_PULLUP);
+    pinMode(Key3, INPUT_PULLUP);
+    pinMode(Key4, INPUT_PULLUP);
+    // light 
+    pinMode(GreenPin, OUTPUT);
+    pinMode(RedPin, OUTPUT);
+    // init light state
+    Check(false);
+
+    /*---- software setup----*/
     // init Serial 
     Serial.begin(9600);
     // start connect to AP
@@ -155,12 +225,28 @@ void setup(){
     size_t headerkeyssize = sizeof(headerkeys)/sizeof(char*);
     //ask server to track these headers
     server.collectHeaders(headerkeys, headerkeyssize );
+    // start server 
     server.begin();
     Serial.println("HTTP server started");
 }
 
 void loop(void){
-  server.handleClient();
+    char key = GetKey();
 
-  delay(500);
+    if(key=='4'){
+        ResetDoor();
+    }
+    if(key == DoorPassword[idx] ) idx++;
+    // password correct 
+    if( idx == DoorPasswordLen ){ 
+        Check(true);
+        //  first time open door
+        if( !Open ){ 
+            UpdateRecord();
+            Open = true;
+        }
+    }
+
+    server.handleClient();
+    delay(500);
 }
