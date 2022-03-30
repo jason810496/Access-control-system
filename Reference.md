@@ -177,6 +177,11 @@ https://www.twblogs.net/a/5bd3dd3e2b717778ac20f967
 
 https://techtutorialsx.com/2017/04/09/esp8266-get-mac-address/
 
+### Get request with NodeMCU
+
+https://randomnerdtutorials.com/esp32-http-get-post-arduino/
+
+
 ### Reversed ip 
 
 Reserved IP設定

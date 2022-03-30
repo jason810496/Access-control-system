@@ -1,7 +1,7 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
-#include <ESP8266WebServer.h>
-
+#include <ESP8266WebServer.h> 
+#include <ESP8266HTTPClient.h> // for http request to Google API
 /* --- HTML FILE --- */
 #include "index.h"
 #include "login.h"
@@ -34,6 +34,9 @@ uint8_t DoorPasswordLen = 3;
 uint8_t idx = 0 ;
 bool Open = false ; 
 
+// google app script API
+String AppURL = "https://script.google.com/macros/s/AKfycbyxtctWmkk0tgnCqc30kakWwgKVrshhzud1ivoZd80_vvK9XSHyFCT6AbScogiOfLHAOA/exec";
+
 // open 8080 port 
 ESP8266WebServer server(8080);
 
@@ -43,7 +46,7 @@ char GetKey(){
     byte btn_state = digitalRead( buttonPin[i] ) ;
 
     if( btn_state == LOW ){
-        switch(buttonPin[i){
+        switch(buttonPin[i]){
             case Key1: 
                 return '1';
             case Key2:
@@ -64,8 +67,10 @@ void Check(bool flag){
         digitalWrite(RedPin, LOW);
         digitalWrite(GreenPin, HIGH);
     }
-    digitalWrite(RedPin, HIGH);
-    digitalWrite(GreenPin, LOW);
+    else{
+        digitalWrite(RedPin, HIGH);
+        digitalWrite(GreenPin, LOW);
+    }
 }
 // reset door
 void ResetDoor(){
@@ -180,7 +185,30 @@ void HandleNotFound(){
 
 
 void UpdateRecord(){
+    if(WiFi.status()!= WL_CONNECTED){
+      Serial.println("Bad connection!");
+      return ;
+    }
+    Serial.println("update Record");
+    WiFiClient client;
+    HTTPClient http;
+    http.begin(client,AppURL.c_str() );
+    // send request
+    int httpResponseCode = http.GET();
 
+    if ( httpResponseCode ) {
+        Serial.println("Update Record successfully");
+        Serial.print("HTTP Response code: ");
+        Serial.println(httpResponseCode);
+        String payload = http.getString();
+        Serial.println(payload);
+    }
+    else {
+        Serial.print("Error code: ");
+        Serial.println(httpResponseCode);
+    }
+    // Free resources
+    http.end();
 }
 
 void setup(){
@@ -233,7 +261,10 @@ void setup(){
 void loop(void){
     char key = GetKey();
 
-    if(key=='4'){
+    if( key != '0'){
+        Serial.println(key);
+    }
+    if(key == '4'){
         ResetDoor();
     }
     if(key == DoorPassword[idx] ) idx++;
