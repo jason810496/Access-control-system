@@ -196,7 +196,7 @@ void UpdateRecord(){
     // send request
     int httpResponseCode = http.GET();
 
-    if ( httpResponseCode ) {
+    if ( httpResponseCode>0 ) {
         Serial.println("Update Record successfully");
         Serial.print("HTTP Response code: ");
         Serial.println(httpResponseCode);
