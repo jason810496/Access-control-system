@@ -173,7 +173,7 @@ const char ADMIN_HTML[] = R"=====(
 
    
     <div class="container">
-        <form action='/login' method='POST'>
+        <form action='/admin' method='POST'>
             <div class="input-group">
                 <input name="PASSWORD" placeholder="New Password" type="text" >
                 <button type="submit">Submit</button>
