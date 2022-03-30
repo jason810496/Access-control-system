@@ -254,6 +254,27 @@ https://oilcut123.pixnet.net/blog/post/269282582
 
 
 
+### Fingerprint 
+
+example of using WiFiClientSecure to deal with FingerPrint
+
+http://blog.s2u4o.com/project-works/fbfancount/fbfancountardunioidefingerprint/
+
+check Fingerprint of website:
+
+https://www.grc.com/fingerprints.htm
+
+WiFiClientSecure reference :
+
+https://links2004.github.io/Arduino/d2/d2f/class_wi_fi_client_secure.html
+
+
+##### new idea for other project
+
+突然想到google app script的定時呼叫功能可以來叫醒heroku之類的會睡著的serverless application!
+
+
+
 
 
 
