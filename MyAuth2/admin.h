@@ -1,4 +1,5 @@
 const char ADMIN_HTML[] = R"=====(
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -42,15 +43,15 @@ const char ADMIN_HTML[] = R"=====(
             top:10%;
             background-color: rgb(139, 139, 151);
             width: 100%;
-            left: auto;
-            height: 220px;
+            left: 0%;
+            height: 300px;
 
             min-width: 500px;
         }
-        button{
+        .submit{
             position:absolute;
             left:75%;
-            top:30%;
+            top:25%;
             width: 10%;
             min-width: 140px;
             height: 70px;
@@ -63,11 +64,26 @@ const char ADMIN_HTML[] = R"=====(
             background-color: rgb(52, 64, 75);
             
         }
+        .logout{
+            position:absolute;
+            right:20px;
+            top:20px;
+            width: 8%;
+            min-width: 120px;
+            height: 60px;
+            border-radius: 10px;
+            font-size: 25px;
+            font-weight: 700;
+            padding-top: 10px;
+            border: 5px solid aliceblue;
+            color: aliceblue;
+            background-color: rgb(52, 64, 75);
+        }
 
         input{
             position: absolute;
             left: 10%;
-            top: 30%;
+            top: 25%;
             height: 65px;
             width: 50%;
             border: 5px solid rgb(52, 64, 75);
@@ -92,7 +108,7 @@ const char ADMIN_HTML[] = R"=====(
         .check{
             position:absolute;
             left:42.5%;
-            top:60%;
+            bottom: 30%;
             width: 15%;
             min-width: 200px;
             height: 70px;
@@ -124,11 +140,18 @@ const char ADMIN_HTML[] = R"=====(
             .header {
                 height: 70px;
             }
+            .logout{
+                top:10px;
+                min-width: 100px;
+                height: 50px;
+                font-size: 20px;
+                border: 3px solid aliceblue;
+            }
         }
 
         @media screen and (max-width: 500px) {
             
-            button{
+            .submit{
                 height: 55px;
                 min-width: 100px;
                 font-size: 20px;
@@ -155,6 +178,7 @@ const char ADMIN_HTML[] = R"=====(
                 height:50px;
                 font-size: 20px;
                 left: 25%;
+                bottom: 10%;
             }
         }
 
@@ -168,6 +192,9 @@ const char ADMIN_HTML[] = R"=====(
     <!-- header -->
     <div class="bg-dark header">
         <h2 class="test" >Admin</h2>
+        <form action='/logout' method='GET'>
+            <button class="logout" type="submit">Logout</button>
+        </form>
     </div>
 
    
@@ -175,7 +202,7 @@ const char ADMIN_HTML[] = R"=====(
         <form action='/admin' method='POST'>
             <div class="input-group">
                 <input name="PASSWORD" placeholder="New Password" type="text" >
-                <button type="submit">Submit</button>
+                <button class="submit" type="submit">Submit</button>
             </div>
         </form>
         
