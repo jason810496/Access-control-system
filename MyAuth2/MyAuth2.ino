@@ -102,8 +102,9 @@ void HandleAdmin(){
         DoorPassword = server.arg("PASSWORD");
         DoorPasswordLen = DoorPassword.length();
         Serial.print("New password : ");
-        Serial.print(DoorPassword);
+        Serial.println(DoorPassword);
         Serial.println("update door password");
+        // server.sendHeader("Location","/admin");
     }
 
     server.send(200,"text/html",ADMIN_HTML);
@@ -111,7 +112,7 @@ void HandleAdmin(){
 
 void HandleLogout(){
     Serial.println("Disconnection");
-    server.sendHeader("Location","/login");
+    server.sendHeader("Location","/");
     server.sendHeader("Cache-Control","no-cache");
     server.sendHeader("Set-Cookie","ESPSESSIONID=0");
     server.send(301);
