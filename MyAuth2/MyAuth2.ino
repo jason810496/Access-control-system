@@ -37,6 +37,8 @@ bool Open = false ;
 // google app script API
 String AppURL = "https://script.google.com/macros/s/AKfycbyxtctWmkk0tgnCqc30kakWwgKVrshhzud1ivoZd80_vvK9XSHyFCT6AbScogiOfLHAOA/exec";
 
+// fingerprint:
+// 9A:71:DE:E7:1A:B2:25:CA:B4:F2:36:49:AB:CE:F6:25:62:04:E4:3C
 // open 8080 port 
 ESP8266WebServer server(8080);
 
