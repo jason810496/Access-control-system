@@ -244,13 +244,19 @@ https://oilcut123.pixnet.net/blog/post/269282582
 
 ### 新問題
 
-當我寫好大致的server時是開在`80 port`
+當我寫好大致的server時是開在`80 port`，並且也做好port forrwarding(`80 port `對接`80 port`)
 
 結果在routing 時(連到`12.34.56.78/login`or`.../user`)卻一直被redirect到`root`（`12.34.56.78/`）去
 
-原本以為是content-type的問題，因為有另一份code的return content-type剛好是`text/plain`就可以routing(我也還不確定卻切的原因)
+原本以為是content-type的問題，因為有另一份code的return content-type剛好是`text/plain`就可以routing(我也還不確定確切的原因)
 
-我以為是
+所以應該是port的問題：原先設定的`80 port`是http的默認port
+
+我先將改為`8080 port`對接`8080 port`就可以了！
+
+應該是因為AP自身也需要用`80 port`，所以在routing時就直接被redirect到root了
+
+並且在瀏覽時都要以8080port瀏覽
 
 
 
