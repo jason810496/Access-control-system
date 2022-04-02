@@ -7,53 +7,85 @@
 從零打造可以從WAN遠端連線修改門禁密碼、上傳紀錄到雲端進出資料的門禁系統。從硬體線路配置、port forwarding到跨平台使用使用界面完成物聯網架構。將該專案作為開發軟硬體實力兼具的證明。
 ## 概述
 
-在工程設計專題再次接觸到Arduino等相關硬體
-透過NodeMCU
-從Arduino硬體線路配置
-透過Wifi模組將硬體連網
-到登入界面、管理者界面等RWD UI
+契機：在工程設計專題再次接觸到Arduino等相關硬體
+實作與技術細節：從NodeMCU硬體線路配置
+運用相關Wifi模組將硬體連網
+建立登入界面、管理者界面等RWD UI
 並設定ddns方便用戶連線
 打造可以從WAN遠端修改密碼並將開門時間紀錄在Google sheet的IoT門禁系統
 
-在誤打誤撞中學會解決經過許多硬體困難
-也開發出完整的遠端門禁系統
+困難與解決：NodeMCU , Port Forwarding , https連線...
+
+成果：演示完整的遠端門禁系統
+
+心得：
+在除錯的過程中尋找網路資料與詢問相關專業人士
+在過程學會解決經過許多實作IoT系統的問題
+最後也成功開發出有完整功能的遠端門禁系統
 ## 動機
 
 在工程設計專題再次接觸到Arduino等相關硬體，而這次想要嘗試物聯網的相關應用，於是我挑戰從零打造遠端門禁系統。並且門禁系統包括跨平排的使用者界面，在不同的裝置都能使用。功能包括：遠端修改密碼、將進出資料紀錄到雲端。該專案做為自己有能力結合硬體與軟體開發物聯網應用程式的證明。
 ## 實做
 
-從學校老師借NodeMCU到開發出完整的遠端門禁系統耗時約一週，途中也遇到許多硬體困難和網路協定設定需要克服。
+從學校老師借NodeMCU到開發出完整的遠端門禁系統耗時約一週，途中也遇到許多硬體困難和網路協定設定，自行從網路研究和詢問相關專業人士後實作出系統。
 
 ### 功能
 
-硬體
+#### 硬體
 
-數字輸入面板（輸入密碼用）
+* 數字輸入面板（輸入密碼用）
 
-LED燈（模擬門的開關）
+* LED燈（模擬門的開關）
 
-遠端修改密碼
+#### 軟體
 
-登入登出機制
-    包括紀錄登入狀態紀錄、對未登入用戶的redirect
+使用者界面：
 
-登入界面
+* 登入界面
+專門給管理者登入的界面
+* 登入登出機制
+包括利用cookie紀錄登入狀態紀錄、對未登入用戶的redirect
 
-管理者界面
-    可以修改密碼
-    連結至雲端試算表紀錄
+* 管理者界面
+可以遠端修改密碼
+連結至雲端試算表紀錄
 
-進出紀錄：
-    整合至雲端試算表
+* 記錄門禁
+將進出資料整合至Google雲端試算表
 
 ### 成果
-- Github 完整程式碼連結
+- Github
 - 影片
 - 照片
 
-### 架構
+線路配置
+
+RWD使用者界面
+
+### 架構與技術細節
+
+
+NodeMCU連網
+
+ESP8266 Webserver
+
+Port Forwarding設定
+
+google app script
+
+https連線
+
+fingerprint
+
+UI界面(RWD) 
+
+將前端與後端、硬體端點整合
 
 ### 困難
+
+#### 在Linux系統編寫Arduino 
+
+首先要解決serial port的permission denied問題，這是因為serial port的權限不足，無法完成燒入讀寫的動作。解決方法：使用`chmod`指令更變對檔案檔案的permission進行設定與更改。
 
 #### NodeMCU腳位限制
 
@@ -90,47 +122,32 @@ port
 
 #### Routing
 
-將Port Forwarding和Reversed ip設定好後，又有新的問題出現:在web的routing時無法連到正確的route，都會被redirect到Root。如我要連至(`My WAN ip/login`時都被redirect到`My WAN ip/`)
+將Port Forwarding和Reversed ip設定好後，又有新的問題出現:在web的routing時無法連到正確的route，都會被redirect到Root。如我要連至(`My WAN ip/login`時都被redirect到`My WAN ip/`)請教相關專家後判斷應該是AP預設佔用80port對外聯絡，而routing的動作導致AP不知道將Client轉發到那裡所以就轉發會root。所以我嘗試開在8080port並將server也開在8080 port就解決routing的問題了。
+
 #### HTTPS連線
 
-當門被打開時，我的server要向我寫好的google app script發出請求(可以看成呼叫API)並將紀錄寫至google sheet中。但是在測試時發現無法將
-
-要連線到
-
-技術知識點：
-
-在Linux作業系統編寫Arduino
-
-透過Arduino燒入ESP01
-
-透過USB轉UART燒入ESP01
-
-NodeMCU連網
-
-ESP8266 Webserver
-
-Port Forwarding設定
-
-google app script
-
-https連線
-
-fingerprint
-
-UI界面(RWD) 
-
-將前端與後端、硬體端點整合
+當門被打開時，我的server要向我寫好的google app script發出請求(可以看成呼叫API)並將紀錄寫至google sheet中。但是在測試時發現無法向google app script發出請求，我判定應該是需要https連線才可以連至google。而搜尋eps2688相關社群的資料找到叫WiFiClientSecure的libaray透過fingerprint來建立https連線。因為N無法像瀏覽器一樣建立電子憑證，但是NodeMCU可以透過瀏覽器產生之憑證中的憑證指紋，偽裝成瀏覽器向網頁伺服器發出請求。
 
 ## 心得
 
-從無到有打造一個可以遠端修改密碼、將進出紀錄上傳至雲端的門禁系統對我是一個挑戰。將硬體需求
+從無到有打造一個可以遠端修改密碼、將進出紀錄上傳至雲端的門禁系統對我是一個挑戰。也因為不熟悉網管也沒實作物聯網的經驗，在實作的過程中遇到許多困難。從一開始對`WAN`、`LAN`都不了解到自己操作port forwarding和ddns設定。實作將完整的IoT遠端門禁系統的過程我學會打造物聯網和遠端連線的基本技術;在遇到參考網路資料都無法解決時，我主動請教IoT專業人士討論技術細節，也在討論過程中學到許多IoT的專業技術知識與經驗。
 
-## 未來加強
+## 未來挑戰
 
-增加即時影像功能
+增加即時影像功能：
+更完善門禁系統的功能，讓管理者可以確認即時畫面
 
-連接Line等通訊軟體
+連接Line或messneger等通訊軟體：
+當server出現錯誤時可以即時通知管理者
 
-對連線不到AP的處理
+在管理者界面增加連接AP裝置的設定：
+目前對AP的連線是寫定在程式中，應該要可以透過UI界面更變AP連線設定。
+
+增加有時限性密碼和隨機亂數密碼功能：
+管理者可以針對當前密碼設定有效日期，並在期限後生成隨機密碼。
+
+
+
+
 
 
