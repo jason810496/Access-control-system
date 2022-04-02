@@ -7,29 +7,33 @@
 從零打造可以從WAN遠端連線修改門禁密碼、上傳紀錄到雲端進出資料的門禁系統。從硬體線路配置、port forwarding到跨平台使用使用界面完成物聯網架構。將該專案作為開發軟硬體實力兼具的證明。
 ## 概述
 
-契機：在工程設計專題再次接觸到Arduino等相關硬體
-實作與技術細節：從NodeMCU硬體線路配置
+**契機：**
+在工程設計專題再次接觸到Arduino等相關硬體
+**實作與技術細節：**
+從NodeMCU硬體線路配置
 運用相關Wifi模組將硬體連網
 建立登入界面、管理者界面等RWD UI
 並設定ddns方便用戶連線
 打造可以從WAN遠端修改密碼並將開門時間紀錄在Google sheet的IoT門禁系統
 
-困難與解決：初探NodeMCU , Port Forwarding , https連線...
+**困難與解決：**
+初探NodeMCU , Port Forwarding , https連線...
 
-成果：演示完整的遠端門禁系統
+**成果：**
+演示完整的遠端門禁系統
 
-心得：
+**心得：**
 在除錯的過程中尋找網路資料與詢問相關專業人士
 在過程學會解決經過許多實作IoT系統的問題
 最後也成功開發出有完整功能的遠端門禁系統
-## 動機
+## 一、動機
 
 在工程設計專題再次接觸到Arduino等相關硬體，而這次想要嘗試物聯網的相關應用，於是我挑戰從零打造遠端門禁系統。並且門禁系統包括跨平排的使用者界面，在不同的裝置都能使用。功能包括：遠端修改密碼、將進出資料紀錄到雲端。該專案做為自己有能力結合硬體與軟體開發物聯網應用程式的證明。
-## 實做
+## 二、實做
 
 從學校老師借NodeMCU到開發出完整的遠端門禁系統耗時約一週，途中也遇到許多硬體困難和網路協定設定，自行從網路研究和詢問相關專業人士後實作出系統。
 
-### 功能
+### （一）功能
 
 #### 硬體
 
@@ -55,28 +59,39 @@
 * 記錄門禁
 將進出資料整合至Google雲端試算表
 
-### 成果
+### （二）成果
 - Github
-[link](link)
-- 影片
+[Github 連接](https://github.com/jason810496/Access-control-system)
+- 操作影片
 [youtube](link)
 - 照片
 
-硬體線路配置
+模擬硬體線路配置圖：
+![Circuit](https://i.imgur.com/ycSAOKr.png)
 
-RWD使用者界面
 
-電腦畫面：
+
+RWD使用者界面：
+
+**電腦畫面：**
 登入、管理者畫面
-
-手機畫面：
+![admin](https://i.imgur.com/UeM0X5G.png)
+![home](https://i.imgur.com/3GQjpSS.png)
+![login](https://i.imgur.com/GF6FZAk.png)
+**手機畫面：**
 登入、管理者畫面
-
+[手機操作影片連結]()
 
 ### 架構與技術細節
 
-**這邊要畫流程圖**
+**流程圖**
+![Hardware part](https://i.imgur.com/S8KafKN.png)
+![NodeMCU part](https://i.imgur.com/WeKrhWf.png)
+![Website part](https://i.imgur.com/Cf4Q1kL.png)
 
+**架構：**
+
+主要分成三個大架構：硬體控制、網站使用者界面、NodeMCU整合
 NodeMCU連網
 
 ESP8266 Webserver
@@ -103,24 +118,38 @@ UI界面(RWD)
 
 在初次使用`NodeMCU`時忘記初始化腳位的`PinMode`(設定該腳位的訊號源是輸出、輸入)導致只有`GPIO4`和`GPIO5`正常運作(`GPIO`是`General Purpose Input Output`)所以先去買專用的擴充板，但事實上擴充板可控制的腳位數量與NodeMCU是相同的。在事後才發現是一開始沒有初始化腳位的問題，而不是NodeMCU的腳位限制。
 
-NodeMCU照片
+![NodeMCU](https://i.imgur.com/WizHfan.jpg)
+
+NodeMCU細節照片
 #### EPS01燒入問題、與IoT人士接軌
 
 因為當時以為是NodeMCU的腳位限制，所以我在搜尋相關資訊時發現：`EPS01`WiFi模組。我想：「將Arduino連接`ESP01`等於是一個有很多可控制腳位的`NodeMCU`」。由於沒有專門對接ESP01的燒入器，所以需要透過Arduino燒入ESP01，電腦與ESP01無法溝通。在經過幾天的測試和參考網路上不同資料的線路配置仍無法燒入，所以主動向網路上的IoT專業人士協助。這次實作也請教該專業人士許多技術細節，也很感謝他無私的分享。而他建議買一個USB轉UART的燒入器，因為Arduino和EPS01預設的燒入頻率不相同。
 
+
+![UART to ESP01](https://i.imgur.com/PoXfOFm.jpg)
+![UART](https://i.imgur.com/pVjQmIf.jpg)
+透過USB轉UART線路圖
+
+![EPS01 with Arudino](https://i.imgur.com/QMhTxDf.jpg)
 透過Arduino燒入ESP01線路圖
 
-透過USB轉UART線路圖
+CP2101 (USB轉UART)
+![](https://i.imgur.com/G0QH4Ob.jpg)
+![](https://i.imgur.com/QFKLHkp.jpg)
+
+
 
 #### 重回NodeMCU
 
 因為ESP01燒入問題認識的專業人士提到：「一般實作物聯網都是使用NodeMCU或ESP32，而且NodeMCU也有很多腳位可以運用。」
 我在重新查尋NodeMCU的GPIO後，才發現其實有10來個腳位可以控制，先前是因為沒有初始化腳位所造成的問題(PinMode要設定PinIn、PinOut)。
 
-![]()
+![NodeMCU PinOut](https://i.imgur.com/4eDLoDQ.jpg)
+
 NodeMCU的GPIO圖
 
-![]()
+![NodeMCU on my table](https://i.imgur.com/y4DHyRa.jpg)
+
 將NodeMCU接上KeyPad和LED的線路配置
 
 #### Port Forwarding
@@ -137,9 +166,16 @@ port
 
 又因為`DHCP`分配給NodeMCU的`LAN ip`不一定每次相同，所以我額外設定`reversed ip`(將指定的`LAN ip`保留給指定的裝置)
 
+![open 80 port](https://i.imgur.com/k8Gvqfy.png)
+最後成功設定port forwarding
+
 #### 解決Routing問題
 
 將Port Forwarding和Reversed ip設定好後，又有新的問題出現:在web的routing時無法連到正確的route，都會被redirect到Root。如我要連至(`My WAN ip/login`時都被redirect到`My WAN ip/`)請教相關專家後判斷應該是AP預設佔用80port對外聯絡，而routing的動作導致AP不知道將Client轉發到那裡所以就轉發會root。所以我嘗試開在8080port並將server也開在8080 port就解決routing的問題了。
+
+
+![setting wrong port](https://i.imgur.com/twrrPcG.png)
+當時不熟悉port，應該將`WAN`和`LAN`都開8080 port
 
 #### 建立HTTPS連線
 
@@ -164,6 +200,7 @@ port
 管理者可以針對當前密碼設定有效日期，並在期限後生成隨機密碼。
 
 
+###### tags: `Arduino`
 
 
 
