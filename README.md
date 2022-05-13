@@ -33,6 +33,13 @@ In a blink of an eye , you are successfully connect to the **Remote Access Contr
 
 ## The technique behide the URL 
 
+
+### Reserved IP
+NodeMCU have to connect to WiFi router first , once the NodeMCU connect to AP ,NodeMCU will be assigned with a private ip address ( such as `192.168.0.5`) , the process follow DHCP ( a network management protocol used to automate the process of configuring devices on IP networks ) . The problem is that the private ip address which assigned to the device ( such as NodeMCU ) would probably not be the same . 
+
+Setting up `reserved ip` , router will reserve a private address ( take `192.168.0.9` for example )for a specific devices ( route will reconigize the device by MAC address ) . After setting reserved ip , that specific device will only be assigned with `192.168.0.9` private ip address . 
+
+
 ### Port Forwarding 
 To remote control our device from WAN , it's essential to setup the **Port Forwading** in the AP ( Access Point , i.e. the WiFi route in my house )  , which **Forward** the request from WAN to my deviec (NodeMCU) 
 
