@@ -61,4 +61,4 @@ The Admin page is on `nodemcu314.ddns.net/admin` , but users are not permitted t
 ## Web Server Deployment
 NodeMCU can be seen as a server  , after setting **Port forwarding** , users are allowed to connect to the system from WAN ( Wide Area Network )
 
-###### tags: `IoT`
+###### tags: `IoT` `NodeMCU` `Web Server` `Google App Script` `API` `Port Forwarding` 
