@@ -19,7 +19,7 @@ Demo of access control IoT system that allow admin user to change password insta
 
 - **Update the gate access record to Cloud ( Google Sheet )**
 
-- **Front-end Management UI**
+- **Front-end Management UI ( RWD )**
 
 - **Back-end Authorization System (for Admin user to login)**
 
@@ -41,7 +41,9 @@ Setting up `reserved ip` , router will reserve a private address ( take `192.168
 
 
 ### Port Forwarding 
-To remote control our device from WAN , it's essential to setup the **Port Forwading** in the AP ( Access Point , i.e. the WiFi route in my house )  , which **Forward** the request from WAN to my deviec (NodeMCU) 
+To remote control our device from WAN , it's essential to setup the **Port Forwading** in the AP ( Access Point , i.e. the WiFi route in my house )  , which **Forward** the request on specific port from WAN to my deviec (NodeMCU) 
+
+Without Port Forwaring  , AP wouldn't how to handle with the request from WAN , then the user wouldn't be able to connect the device remotely . 
 
 ### DNS Setting
 I use [no-ip](https://www.noip.com/) to manage the temporary dynamic DNS record ( IP to domain name ) which is more user-friendly and convenient than manual typing IP address on the browser . 
@@ -81,7 +83,7 @@ I build an API ( based on Google App Script ) that update the gate record on Goo
 ### Overcome the obstacle of HTTPS request from NodeMCU 
 However , NodeMCU can connect to my API in the beginning . The reason is that HTTPS is required to connect to the API , but HTTPS connection have to check the **client certificate fingerprint** first.
 
-To overcome the obstacle , I found a [Example](https://circuits4you.com/2019/01/10/esp8266-nodemcu-https-secured-get-request/) using ESP8266 WiFi package that allow NodeMCU to start HTTPS connection by sending **lient certificate fingerprint** , which solve the problems .
+To overcome the obstacle , I found a [Example](https://circuits4you.com/2019/01/10/esp8266-nodemcu-https-secured-get-request/) using ESP8266 WiFi package that allow NodeMCU to start HTTPS connection by sending **client certificate fingerprint** , which solve the problems .
 
 ## Web Server Deployment
 NodeMCU can be seen as a server  , after setting **Port forwarding** , users are allowed to connect to the system from WAN ( Wide Area Network )
